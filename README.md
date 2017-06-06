@@ -62,5 +62,7 @@
 	npm run build & npm run dev & npm run serve
 
 ## Vue.js 
-> https://github.com/keepfool/vue-tutorials
-> 推荐博客 http://www.cnblogs.com/keepfool/category/845804.html
+* 推荐git
+	* https://github.com/keepfool/vue-tutorials
+* 推荐博客 
+	* http://www.cnblogs.com/keepfool/category/845804.html
