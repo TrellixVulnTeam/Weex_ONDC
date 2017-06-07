@@ -34,14 +34,6 @@
 
 	// 使用 weexpack 创建新工程
 	weexpack create *
-	// 使用 npm 添加依赖
-	npm install
-	// 使用 npm 编译程序，将 .vue/.we 文件编译成 .js
-	npm run build
-	// 添加 platform
-	weexpack platform add android/ios/web
-	// 启动项目
-	./start
 
 	为了让程序可以做到即使即用需要修改一些配置文件
 	1. package.json 文件
@@ -60,6 +52,15 @@
 	npm run serve
 	改为
 	npm run build & npm run dev & npm run serve
+	
+	// 使用 npm 添加依赖
+	npm install
+	// 使用 npm 编译程序，将 .vue/.we 文件编译成 .js 如果在 start 中添加 可以不执行
+	// npm run build
+	// 添加 platform
+	weexpack platform add android/ios/web
+	// 启动项目
+	./start
 
 ## Vue.js 
 * 推荐git
