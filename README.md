@@ -74,8 +74,8 @@
 * Android
 	http://ie8384.com/blog/?p=1452
 	
-*iOS
+* iOS
 	https://segmentfault.com/a/1190000007997099
 	
-*Web
+* Web
 	https://segmentfault.com/a/1190000007844330
