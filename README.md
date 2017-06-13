@@ -63,9 +63,9 @@
 	./start
 
 ## Vue.js 推荐博客
-* 推荐git
+* Vue.js项目
 	* https://github.com/keepfool/vue-tutorials
-* 推荐博客 
+* Vue.js博客
 	* http://www.cnblogs.com/keepfool/category/845804.html
 * ECMAScript 6 入门
 	* http://es6.ruanyifeng.com/?search=import&x=0&y=0
