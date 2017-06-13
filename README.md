@@ -62,10 +62,18 @@
 	// 启动项目
 	./start
 
-## Vue.js 
+## Vue.js 推荐博客
 * 推荐git
 	* https://github.com/keepfool/vue-tutorials
 * 推荐博客 
 	* http://www.cnblogs.com/keepfool/category/845804.html
 * ECMAScript 6 入门
 	* http://es6.ruanyifeng.com/?search=import&x=0&y=0
+
+## Weex 推荐博客
+* Android
+	http://ie8384.com/blog/?p=1452
+*iOS
+	https://segmentfault.com/a/1190000007997099
+*Web
+	https://segmentfault.com/a/1190000007844330
