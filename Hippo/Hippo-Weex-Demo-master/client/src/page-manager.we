@@ -1,0 +1,79 @@
+<template>
+    <div>
+        <div style="margin: 10; flex-direction: row; justify-content: center;">
+
+            <!-- wx的按钮-->
+            <wxc-button size="middle" style="" type="success" value="进入主页" onclick="goHome">
+
+            </wxc-button>
+        </div>
+
+        <!-- wx的panel-->
+        <wxc-panel style="margin:20;" type="info" title="参数携带" border="2">
+            <wxc-tip style="margin-bottom: 10;" type="success" value="{{name}}"></wxc-tip>
+            <wxc-tip style="margin-bottom: 10;" type="success" value="{{country}}"></wxc-tip>
+        </wxc-panel>
+
+        <!-- 生成树状数据-->
+        <tree-view items="{{routers}}">
+        </tree-view>
+    </div>
+</template>
+
+<script>
+
+    /*
+    require 用来加载代码，而 exports 和 module.exports 则用来导出代码。
+
+    1. module.exports 初始值为一个空对象 {}
+
+    2. exports 是指向的 module.exports 的引用
+
+    3. require() 返回的是 module.exports 而不是 exports
+    */
+    var navigator = require('@weex-module/WeexNavigator');
+    require('weex-components');
+
+    var router = require('./router.js');
+
+    module.exports = {
+        data: {
+            routers: '',
+            paths: [],
+            tabs: [
+                '/recommend',
+                '/information',
+                '/cloud',
+                '/group',
+                '/person',
+            ],
+        },
+
+
+        methods: {
+            goHome: function () {
+                navigator.goHome(this.paths);
+            },
+
+            getRealPath: function (tabs) {
+                var paths = [];
+                for (var key in tabs) {
+                    paths[key] = router.getComponent(this, tabs[key]);
+                }
+                return paths;
+            },
+        },
+
+        // 生命周期
+        created: function () {
+            // 获取 所有的 router
+            this.routers = router.getRouters();
+            // 调用内部方法 getRealPath
+            this.paths = this.getRealPath(this.tabs);
+
+
+        },
+
+
+    }
+</script>
