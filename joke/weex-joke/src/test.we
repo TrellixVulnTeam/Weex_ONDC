@@ -1,0 +1,46 @@
+<template>
+
+    <div>
+
+        <text>{{a}}</text>
+        <text>{{b}}</text>
+        <text>{{c}}</text>
+        <text>{{d}}</text>
+
+
+    </div>
+
+</template>
+
+<script>
+
+    require('weex-components');
+    var stream = require('@weex-module/stream');
+    module.exports = {
+
+        data: {
+            a: 'QUERY_PAGE_INFO',
+            b: '1',
+            c: 'xx',
+            d: 'xx',
+
+        },
+
+        created: function () {
+            var self = this;
+            stream.fetch({
+                    method: 'POST',
+                    url: '',
+                    body: '{"methodName":"' + this.a + '","version":"' + this.b + '"}'
+                },
+                // native 的 回调
+                function (ret) {
+                    self.c = ret;
+                },
+                function (res) {
+                    self.d = res;
+                }
+            );
+        }
+    }
+</script>

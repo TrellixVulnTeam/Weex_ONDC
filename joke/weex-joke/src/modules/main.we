@@ -1,0 +1,204 @@
+<template>
+
+
+    <div class="tab-question">
+        <!-- 自定义 导航栏-->
+        <navbar title="笑话部落格"></navbar>
+        <div>
+            <text>{{label}}</text>
+            <text>{{ret1}}</text>
+            <text>{{ret2}}</text>
+            <text>{{req}}</text>
+
+        </div>
+        <!-- 列表-->
+        <list>
+            <refresh class="refresh-view"
+                     display="{{refresh_display}}"
+                     onrefresh="onrefresh">
+
+                <!-- 进度条-->
+                <loading-indicator class="indicator"></loading-indicator>
+
+                <!-- 下拉刷新文字-->
+                <text class="refresh-arrow"
+                      style="text-align:center;
+                      color:rgb(238,162,54)"
+                      if="{{refresh_display==='hide'}}">
+                    {{msg}}
+                </text>
+
+            </refresh>
+
+
+            <cell>
+                <scroller>
+                    <!-- 自定义 item-->
+                    <joke_item repeat={{jokeArray}}></joke_item>
+                </scroller>
+                <!-- 分割线-->
+                <div class="line"></div>
+            </cell>
+        </list>
+
+    </div>
+</template>
+
+
+<script>
+    require('weex-components');
+    var stream = require('@weex-module/stream');
+    //var modal = require('@weex-module/modal');
+    module.exports = {
+
+        data: {
+            label: '请求数据：',
+            ret1: 112312312312321321311111123123123123,
+            ret2: '',
+            req: '',
+            refresh_display: 'hide',
+            jokeArray: [],
+            test: 's-test',
+            msg: '下拉刷新'
+        },
+
+        methods: {
+            onrefresh: function (e) {
+                var self = this;
+                self.msg = '下拉刷新';
+                self.refresh_display = 'show';
+                this.$call('timer', 'setTimeout', function () {
+                    self.refresh_display = 'hide';
+                }, 2000);
+
+                self.refresh();
+            },
+
+            refresh: function () {
+                var self = this;
+                var url = 'https://api.leancloud.cn/1.1/classes/joke?limit=20&&order=-createdAt&&';
+                stream.fetch({
+                    method: 'GET',
+                    url: url,
+                    headers: {
+                        'X-LC-Id': 'zksrg6fpR18GjAsv0eHPs4Kz-gzGzoHsz',
+                        'X-LC-Key': 'XfkYkvCvsJ1FkhEqzdTsMnNC',
+                        'content-type': 'application/json'
+                    },
+                }, function (ret) {
+                    //self.net = ret;
+                    if (!ret.ok) {
+                        modal.toast({'message': '你的手机网络出问题啦!', 'duration': 2});
+                    } else {
+                        self.jokeArray.splice(0, self.jokeArray.length);
+                        var json = JSON.parse(ret.data);
+                        for (var i = 0; i < json.results.length; i++) {
+                            self.jokeArray.push(json.results[i]);
+                        }
+                    }
+                });
+            }
+
+        },
+
+        // self
+        created: function () {
+            var self = this;
+            stream.fetch({
+                    method: 'GET',
+                    url: 'https://api.leancloud.cn/1.1/classes/joke?limit=10&&order=-createdAt&&',
+                    headers: {
+                        'X-LC-Id': 'zksrg6fpR18GjAsv0eHPs4Kz-gzGzoHsz',
+                        'X-LC-Key': ' XfkYkvCvsJ1FkhEqzdTsMnNC',
+                        'Content-Type': 'application/json'
+                    }
+                },
+                // native 的 回调
+                function (ret) {
+                    /*
+                     数据格式
+
+                     {
+                     "status":200,
+                     "data":{
+                     "results": [
+                     {
+                     "down": 0,
+                     "updatedAt": "2017-06-06T07:04:46.711Z",
+                     "objectId": "5936540ea0bb9f0058f5d26e",
+                     "username": "暴走漫画",
+                     "createdAt": "2017-06-06T07:04:46.711Z",
+                     "jokecontent": "大发送到发送到是否是vdxcxc",
+                     "up": 0,
+                     "id": 3,
+                     "url": "http://ac-zksrg6fp.clouddn.com/HAZdqltigQ95TP3G9hDgqAlB4BEJvlrSGR6Ae0d1.png",
+                     "reply": 0
+                     }
+                     ]
+                     },
+                     "headers":{},
+                     "ok":true,
+                     "statusText":"OK"
+                     }
+                     * */
+
+                    // 数据输出
+
+                    //self.ret = ret;
+
+                    if (!ret.ok) {
+                        modal.toast({"message": "Network Error!", 'duration': 2});
+                    } else {
+                        var json = JSON.parse(ret.data);
+                        //self.ret = json;
+                        // results:
+                        for (var i = 0; i < json.results.length; i++) {
+                            self.jokeArray.push(json.results[i]);
+                        }
+                    }
+                },
+                function (res) {
+                    //self.req=res;
+
+                    /*
+                     [{
+                     "data": "53",
+                     "type": 2
+                     },
+                     {
+                     "data": "[{\"args\":[\"2\",
+                     {\"status\":200,\"length\":3388,\"readyState\":2,\"headers\":{\"Cache-Control\":\"no-cache,no-store\",\"Pragma\":\"no-cache\",\"X-Android-Selected-Protocol\":\"http/1.1\",\"Connection\":\"keep-alive\",\"X-Android-Response-Source\":\"NETWORK 200\",\"X-Android-Sent-Millis\":\"1496893865421\",\"Content-Type\":\"application/json;charset=utf-8\",\"_\":\"HTTP/1.1 200 OK\",\"Date\":\"Thu, 08 Jun 2017 05:29:09 GMT\",\"Server\":\"Tengine\",\"Strict-Transport-Security\":\"max-age=31536000\",\"Transfer-Encoding\":\"chunked\",\"X-Android-Received-Millis\":\"1496893865498\"}}
+                     ,true],\"method\":\"callback\"}]",
+                     "type": 3
+                     }]
+                     * */
+                }
+            );
+        }
+    }
+</script>
+
+<style>
+    .indicator {
+        width: 60;
+        height: 60;
+        color: #889967;
+    }
+
+    .refresh-view {
+        height: 100;
+        width: 750;
+        align-items: center;
+    }
+
+    .line {
+        width: 750;
+        height: 20;
+        background-color: #EDEDED;
+    }
+
+    .tab-question {
+        margin-bottom: 150;
+    }
+
+</style>
